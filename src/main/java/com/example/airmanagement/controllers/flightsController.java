@@ -1,5 +1,6 @@
 package com.example.airmanagement.controllers;
 
+import com.example.airmanagement.constants.StatusConstants;
 import com.example.airmanagement.dao.AirCompanyDAO;
 import com.example.airmanagement.dao.AirPlaneDAO;
 import com.example.airmanagement.dao.FlightDAO;
@@ -37,50 +38,54 @@ public class flightsController {
         if (airCompanyDAO.findById(airCompanyId).isPresent() && airPlaneDAO.findById(airplaneId).isPresent()) {
             AirCompany airCompany = airCompanyDAO.findById(airCompanyId).get();
             Airplane airplane = airPlaneDAO.findById(airplaneId).get();
-            Flight flight = new Flight(airCompany, airplane,departureCountry, destinationCountry, distance, estFlightTime);
+            Flight flight = new Flight(airCompany, airplane, departureCountry, destinationCountry, distance, estFlightTime);
             flight.setCreatedAt(LocalDateTime.now());
             flight.setFlightStatus(FlightStatus.PENDING);
             flightDAO.save(flight);
-            return "Sucessfully added new flight";
+            return StatusConstants.SUCCESSFULLY_ADDED_FLIGHT;
         }
-        return "Check aircompanyId and airplaneId";
+        return StatusConstants.UNSUCCESS;
     }
 
     @GetMapping("/active")
-    public List<Flight> getActiveFlightsStartedMoreThan24Ago(){
+    public List<Flight> getActiveFlightsStartedMoreThan24Ago() {
         return flightDAO.searchActiveFlights24();
     }
 
-    @PatchMapping("/{id}/{status}")
+    @PatchMapping("/{id}")
     public String setNewStatus(@PathVariable int id,
-                               @PathVariable String status) {
+                               @RequestParam String status) {
         boolean b = Arrays.stream(FlightStatus.values()).anyMatch((t) -> t.name().equals(status.toUpperCase()));
         if (flightDAO.findById(id).isPresent() && b) {
             Flight flight = flightDAO.findById(id).get();
             FlightStatus flightStatus = FlightStatus.valueOf(status.toUpperCase());
-            switch (flightStatus) {
-                case DELAYED:
-                    flight.setDelayStartedAt(LocalDateTime.now());
-                    flight.setFlightStatus(FlightStatus.DELAYED);
-                    break;
-                case ACTIVE:
-                    flight.setStartedAt(LocalDateTime.now());
-                    flight.setFlightStatus(FlightStatus.ACTIVE);
-                    break;
-                case COMPLETED:
-                    flight.setEndedAt(LocalDateTime.now());
-                    flight.setFlightStatus(FlightStatus.COMPLETED);
-                    break;
-                default: break;
-            }
-            flightDAO.save(flight);
-            return "Status updated successfully";
+            Flight withSwitchStatus = switchStatus(flight, flightStatus);
+            flightDAO.save(withSwitchStatus);
+            return StatusConstants.SUCCESSFULLY_UPDATED_FLIGHTS_STATUS;
         }
-        return "Something went wrong";
+        return StatusConstants.UNSUCCESS;
+    }
+
+    private Flight switchStatus(Flight flight, FlightStatus flightStatus) {
+        switch (flightStatus) {
+            case DELAYED:
+                flight.setDelayStartedAt(LocalDateTime.now());
+                flight.setFlightStatus(FlightStatus.DELAYED);
+                break;
+            case ACTIVE:
+                flight.setStartedAt(LocalDateTime.now());
+                flight.setFlightStatus(FlightStatus.ACTIVE);
+                break;
+            case COMPLETED:
+                flight.setEndedAt(LocalDateTime.now());
+                flight.setFlightStatus(FlightStatus.COMPLETED);
+                break;
+        }
+        return flight;
     }
 
     @GetMapping("/completedwithdelay")
-    public List<Flight> getCompletedFlightsWithDelay(){
-       return flightDAO.searchCompletedFlightsWithDelay();
+    public List<Flight> getCompletedFlightsWithDelay() {
+        return flightDAO.searchCompletedFlightsWithDelay();
     }
 }

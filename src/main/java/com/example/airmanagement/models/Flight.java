@@ -15,12 +15,13 @@ public class Flight {
     @Enumerated(EnumType.STRING)
     private FlightStatus flightStatus;
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinColumn(name = "airCompany_id", referencedColumnName = "id")
     @JsonIgnore
-    private AirCompany airCompanyId;
+    private AirCompany airCompany;
     @OneToOne
-//    @JoinColumn(name = "airplane_id", referencedColumnName = "id")
+    @JoinColumn(name = "airplane_id", referencedColumnName = "id")
     @JsonIgnore
-    private Airplane airplaneId;
+    private Airplane airplane;
     private String departureCountry;
     private String destinationCountry;
     private int distance;
@@ -33,14 +34,14 @@ public class Flight {
     public Flight() {
     }
 
-    public Flight(AirCompany airCompanyId,
-                  Airplane airplaneId,
+    public Flight(AirCompany airCompany,
+                  Airplane airplane,
                   String departureCountry,
                   String destinationCountry,
                   int distance,
                   Time estFlightTime) {
-        this.airCompanyId = airCompanyId;
-        this.airplaneId = airplaneId;
+        this.airCompany = airCompany;
+        this.airplane = airplane;
         this.departureCountry = departureCountry;
         this.destinationCountry = destinationCountry;
         this.distance = distance;
@@ -69,20 +70,20 @@ public class Flight {
         this.flightStatus = flightStatus;
     }
 
-    public AirCompany getAirCompanyId() {
-        return airCompanyId;
+    public AirCompany getAirCompany() {
+        return airCompany;
     }
 
-    public void setAirCompanyId(AirCompany airCompanyId) {
-        this.airCompanyId = airCompanyId;
+    public void setAirCompany(AirCompany airCompany) {
+        this.airCompany = airCompany;
     }
 
-    public Airplane getAirplaneId() {
-        return airplaneId;
+    public Airplane getAirplane() {
+        return airplane;
     }
 
-    public void setAirplaneId(Airplane airplaneId) {
-        this.airplaneId = airplaneId;
+    public void setAirplane(Airplane airplane) {
+        this.airplane = airplane;
     }
 
     public String getDepartureCountry() {
@@ -146,8 +147,8 @@ public class Flight {
         return "Flight{" +
                 "id=" + id +
                 ", flightStatus=" + flightStatus +
-                ", airCompanyId=" + airCompanyId.getId() +
-                ", airplaneId=" + airplaneId.getId() +
+                ", airCompanyId=" + airCompany.getId() +
+                ", airplaneId=" + airplane.getId() +
                 ", departureCountry='" + departureCountry + '\'' +
                 ", destinationCountry='" + destinationCountry + '\'' +
                 ", distance=" + distance +

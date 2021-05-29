@@ -1,5 +1,6 @@
 package com.example.airmanagement.controllers;
 
+import com.example.airmanagement.constants.StatusConstants;
 import com.example.airmanagement.dao.AirCompanyDAO;
 import com.example.airmanagement.dao.FlightDAO;
 import com.example.airmanagement.models.AirCompany;
@@ -23,12 +24,12 @@ public class airCompaniesController {
     }
 
     @GetMapping
-    public List<AirCompany> airCompanies() {
+    public List<AirCompany> getAirCompanies() {
         return airCompanyDAO.findAll();
     }
 
     @GetMapping("/{id}")
-    public AirCompany airCompany(@PathVariable int id) {
+    public AirCompany getAirCompanyById(@PathVariable int id) {
         AirCompany one = null;
         if (airCompanyDAO.findById(id).isPresent()) {
             one = airCompanyDAO.findById(id).get();
@@ -39,23 +40,23 @@ public class airCompaniesController {
     @PostMapping
     public String addNewAirCompany(@RequestBody AirCompany airCompany) {
         airCompanyDAO.save(airCompany);
-        return "Successfully added new company";
+        return StatusConstants.SUCCESSFULLY_ADDED_AIRCOMPANY;
     }
 
     @DeleteMapping("/{id}")
-    public String deleteCompany(@PathVariable int id) {
+    public String deleteAirCompany(@PathVariable int id) {
         if (airCompanyDAO.findById(id).isPresent()) {
             airCompanyDAO.deleteById(id);
-            return "Successfully deleted";
+            return StatusConstants.SUCCESSFULLY_DELETED_AIRCOMPANY;
         }
-        return "Find no company with this id: " + id;
+        return StatusConstants.UNSUCCESSFUL_DELETED_AIRCOMPANY + id;
     }
 
     @PatchMapping("/{id}")
     public String updateAirCompany(@PathVariable int id,
-                                   @RequestParam(required=false) String name,
-                                   @RequestParam(required=false) String companyType,
-                                   @RequestParam(required=false) String foundedAt){
+                                   @RequestParam(required = false) String name,
+                                   @RequestParam(required = false) String companyType,
+                                   @RequestParam(required = false) String foundedAt) {
         if (airCompanyDAO.findById(id).isPresent()) {
             AirCompany forUpdate = airCompanyDAO.findById(id).get();
             boolean updated = false;
@@ -63,31 +64,30 @@ public class airCompaniesController {
                 forUpdate.setName(name);
                 updated = true;
             }
-            if (companyType != null && !companyType.equals(forUpdate.getCompanyType())){
+            if (companyType != null && !companyType.equals(forUpdate.getCompanyType())) {
                 forUpdate.setCompanyType(companyType);
                 updated = true;
             }
-            if (foundedAt != null && !LocalDate.parse(foundedAt).equals(forUpdate.getFoundedAt())){
+            if (foundedAt != null && !LocalDate.parse(foundedAt).equals(forUpdate.getFoundedAt())) {
                 forUpdate.setFoundedAt(LocalDate.parse(foundedAt));
                 updated = true;
             }
             if (updated) {
-                System.out.println(updated);
                 airCompanyDAO.save(forUpdate);
-                return "Updated succesfully";
-            } else return "Nothing to update";
+                return StatusConstants.SUCCESSFULLY_UPDATED_AIRCOMPANY;
+            } else return StatusConstants.UNSUCCESSFUL_UPDATED_AIRCOMPANY;
         }
-        return "Wrong id";
+        return StatusConstants.UNSUCCESS;
     }
 
     @GetMapping("/{name}/{status}")
     public List<Flight> getFlightsByStatus(@PathVariable String name,
-                                           @PathVariable String status){
+                                           @PathVariable String status) {
         List<Flight> flights = null;
         boolean b = Arrays.stream(FlightStatus.values()).anyMatch((t) -> t.name().equals(status.toUpperCase()));
         if (b && airCompanyDAO.findByName(name) != null) {
-            AirCompany byName = airCompanyDAO.findByName(name);
-            flights = flightDAO.searchFlightsByStatus(byName, FlightStatus.valueOf(status.toUpperCase()));
+            AirCompany airCompany = airCompanyDAO.findByName(name);
+            flights = flightDAO.searchFlightsByStatus(airCompany, FlightStatus.valueOf(status.toUpperCase()));
         }
         return flights;
     }

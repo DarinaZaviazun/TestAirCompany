@@ -12,7 +12,8 @@ public class Airplane {
     private String name;
     private long serialNumber;
     @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
-    private AirCompany airCompanyId;
+    @JoinColumn(name = "airCompany_id", referencedColumnName = "id")
+    private AirCompany airCompany;
     private int flightsNumber;
     private long flightDistance;
     private int fuelCapacity;
@@ -24,14 +25,14 @@ public class Airplane {
 
     public Airplane(String name,
                     long serialNumber,
-                    AirCompany airCompanyId,
+                    AirCompany airCompany,
                     int flightsNumber,
                     long flightDistance,
                     int fuelCapacity,
                     String type) {
         this.name = name;
         this.serialNumber = serialNumber;
-        this.airCompanyId = airCompanyId;
+        this.airCompany = airCompany;
         this.flightsNumber = flightsNumber;
         this.flightDistance = flightDistance;
         this.fuelCapacity = fuelCapacity;
@@ -74,12 +75,12 @@ public class Airplane {
         this.serialNumber = serialNumber;
     }
 
-    public AirCompany getAirCompanyId() {
-        return airCompanyId;
+    public AirCompany getAirCompany() {
+        return airCompany;
     }
 
-    public void setAirCompanyId(AirCompany airCompanyId) {
-        this.airCompanyId = airCompanyId;
+    public void setAirCompany(AirCompany airCompany) {
+        this.airCompany = airCompany;
     }
 
     public int getFlightsNumber() {
@@ -128,7 +129,7 @@ public class Airplane {
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", serialNumber=" + serialNumber +
-                ", airCompanyId=" + airCompanyId +
+                ", airCompanyId=" + airCompany.getId() +
                 ", flightsNumber=" + flightsNumber +
                 ", flightDistance=" + flightDistance +
                 ", fuelCapacity=" + fuelCapacity +

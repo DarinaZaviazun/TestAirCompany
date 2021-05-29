@@ -1,5 +1,6 @@
 package com.example.airmanagement.dao;
 
+import com.example.airmanagement.constants.QueryConstants;
 import com.example.airmanagement.models.AirCompany;
 import com.example.airmanagement.models.Flight;
 import com.example.airmanagement.models.FlightStatus;
@@ -13,13 +14,13 @@ import java.util.List;
 @EnableJpaRepositories
 public interface FlightDAO extends JpaRepository<Flight, Integer> {
 
-    @Query("SELECT f FROM Flight f WHERE f.airCompanyId = :airCompany and f.flightStatus = :status")
+    @Query(QueryConstants.FLIGHTS_OF_AIRCOMPANY_BY_STATUS)
     List<Flight> searchFlightsByStatus(@Param("airCompany") AirCompany airCompany,
                                        @Param("status") FlightStatus status);
 
-    @Query(value = "SELECT * FROM Flight f WHERE f.flight_status = 'ACTIVE' and TIMESTAMPDIFF(minute , f.started_at, current_time) > 1440", nativeQuery = true)
+    @Query(value = QueryConstants.ACTIVE_FLIGHTS_STARTED_MORE_THAN_24_HOURS_AGO, nativeQuery = true)
     List<Flight> searchActiveFlights24();
 
-    @Query(value = "SELECT * FROM Flight f WHERE f.flight_status = 'COMPLETED' and TIMESTAMPDIFF(second , f.started_at, f.ended_at) > TIME_TO_SEC (f.est_flight_time);", nativeQuery = true)
+    @Query(value = QueryConstants.COMPLETED_FLIGHTS_WITH_DELAY, nativeQuery = true)
     List<Flight> searchCompletedFlightsWithDelay();
 }

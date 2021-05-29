@@ -1,5 +1,6 @@
 package com.example.airmanagement.controllers;
 
+import com.example.airmanagement.constants.StatusConstants;
 import com.example.airmanagement.dao.AirCompanyDAO;
 import com.example.airmanagement.dao.AirPlaneDAO;
 import com.example.airmanagement.models.AirCompany;
@@ -20,10 +21,10 @@ public class airPlanesController {
     }
 
     @PostMapping("/add")
-    public String addNewAirplane(@RequestBody Airplane airplane){
+    public String addNewAirplane(@RequestBody Airplane airplane) {
         airplane.setCreatedAt(LocalDate.now());
         airPlaneDAO.save(airplane);
-        return "Successfully added new airplane";
+        return StatusConstants.SUCCESSFULLY_ADDED_AIRPLANE;
     }
 
     @PostMapping("/addwithcompany")
@@ -33,26 +34,26 @@ public class airPlanesController {
                                             @RequestParam int flightDistance,
                                             @RequestParam int fuelCapacity,
                                             @RequestParam String type,
-                                            @RequestParam int airCompanyid){
-        if (airCompanyDAO.findById(airCompanyid).isPresent()) {
+                                            @RequestParam int airCompanyId) {
+        if (airCompanyDAO.findById(airCompanyId).isPresent()) {
             Airplane airplane = new Airplane(name, serialNumber, flightsNumber, flightDistance, fuelCapacity, type);
-            airplane.setAirCompanyId(airCompanyDAO.findById(airCompanyid).get());
+            airplane.setAirCompany(airCompanyDAO.findById(airCompanyId).get());
             airplane.setCreatedAt(LocalDate.now());
             airPlaneDAO.save(airplane);
-            return "Successfully added new airplane";
+            return StatusConstants.SUCCESSFULLY_ADDED_AIRPLANE;
         }
-        return "Something went wrong";
+        return StatusConstants.UNSUCCESS;
     }
 
     @PatchMapping("/{id}")
-    public String moveAirplaneToAnotherCompany(@PathVariable int id, @RequestParam int newCompanyId){
+    public String moveAirplaneToAnotherCompany(@PathVariable int id, @RequestParam int newCompanyId) {
         if (airPlaneDAO.findById(id).isPresent() && airCompanyDAO.findById(newCompanyId).isPresent()) {
             Airplane airplane = airPlaneDAO.findById(id).get();
             AirCompany airCompany = airCompanyDAO.findById(newCompanyId).get();
-            airplane.setAirCompanyId(airCompany);
+            airplane.setAirCompany(airCompany);
             airPlaneDAO.save(airplane);
-            return "Updated company for airplane sucessfully";
+            return StatusConstants.SUCCESSFULLY_UPDATED_AIRPLANES_COMPANY;
         }
-        return "Something went wrong, please try again";
+        return StatusConstants.UNSUCCESS;
     }
 }
