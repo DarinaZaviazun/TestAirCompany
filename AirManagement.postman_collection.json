@@ -1,0 +1,374 @@
+{
+	"info": {
+		"_postman_id": "352f8a19-c2d1-4b8a-b13e-4d1495df30e4",
+		"name": "AirManagement",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "task1.read all companies",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/aircompanies",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"aircompanies"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "task1.read one company",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/aircompanies/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"aircompanies",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "task1.add new company",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"FlyUA\",\r\n    \"companyType\": \"Standart\",\r\n    \"foundedAt\": \"2010-03-08\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/aircompanies",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"aircompanies"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "task1.update company",
+			"request": {
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "name",
+							"value": "British Airways",
+							"type": "text"
+						},
+						{
+							"key": "companyType",
+							"value": "Standart",
+							"type": "text"
+						},
+						{
+							"key": "foundedAt",
+							"value": "2000-03-05",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:8080/aircompanies/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"aircompanies",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "task1.delete company",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/aircompanies/5",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"aircompanies",
+						"5"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "task2.move airplane between companies",
+			"request": {
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "newCompanyId",
+							"value": "4",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:8080/airplanes/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"airplanes",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "task3.find all aircompany's flights by status",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/aircompanies/Lufthansa/pending",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"aircompanies",
+						"Lufthansa",
+						"pending"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "task4.active flights started more than 24 hours ago",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/flights/active",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"flights",
+						"active"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "task5.add airplane with or without company",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "name",
+							"value": "A-300",
+							"type": "text"
+						},
+						{
+							"key": "serialNumber",
+							"value": "123456789",
+							"type": "text"
+						},
+						{
+							"key": "flightsNumber",
+							"value": "50",
+							"type": "text"
+						},
+						{
+							"key": "flightDistance",
+							"value": "700000",
+							"type": "text"
+						},
+						{
+							"key": "fuelCapacity",
+							"value": "250000",
+							"type": "text"
+						},
+						{
+							"key": "type",
+							"value": "Airbus",
+							"type": "text"
+						},
+						{
+							"key": "airCompanyId",
+							"value": "1",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:8080/airplanes/add",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"airplanes",
+						"add"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "task6.add new flight",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "airCompanyId",
+							"value": "1",
+							"type": "text"
+						},
+						{
+							"key": "airplaneId",
+							"value": "1",
+							"type": "text"
+						},
+						{
+							"key": "departureCountry",
+							"value": "Spane",
+							"type": "text"
+						},
+						{
+							"key": "destinationCountry",
+							"value": "Great Britain",
+							"type": "text"
+						},
+						{
+							"key": "distance",
+							"value": "7300",
+							"type": "text"
+						},
+						{
+							"key": "estFlightTime",
+							"value": "04:10:00",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:8080/flights",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"flights"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "task7.update flight status",
+			"request": {
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "status",
+							"value": "active",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:8080/flights/3",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"flights",
+						"3"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "task8 completed flights with delay",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/flights/completedwithdelay",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"flights",
+						"completedwithdelay"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
