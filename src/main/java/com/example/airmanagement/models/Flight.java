@@ -1,5 +1,6 @@
 package com.example.airmanagement.models;
 
+import com.example.airmanagement.util.FlightStatus;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;

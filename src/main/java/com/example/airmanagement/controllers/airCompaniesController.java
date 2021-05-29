@@ -1,11 +1,11 @@
 package com.example.airmanagement.controllers;
 
-import com.example.airmanagement.constants.StatusConstants;
+import com.example.airmanagement.util.StatusConstants;
 import com.example.airmanagement.dao.AirCompanyDAO;
 import com.example.airmanagement.dao.FlightDAO;
 import com.example.airmanagement.models.AirCompany;
 import com.example.airmanagement.models.Flight;
-import com.example.airmanagement.models.FlightStatus;
+import com.example.airmanagement.util.FlightStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;

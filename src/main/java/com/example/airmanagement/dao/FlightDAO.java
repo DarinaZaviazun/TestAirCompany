@@ -1,9 +1,9 @@
 package com.example.airmanagement.dao;
 
-import com.example.airmanagement.constants.QueryConstants;
+import com.example.airmanagement.util.QueryConstants;
 import com.example.airmanagement.models.AirCompany;
 import com.example.airmanagement.models.Flight;
-import com.example.airmanagement.models.FlightStatus;
+import com.example.airmanagement.util.FlightStatus;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;

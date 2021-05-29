@@ -1,4 +1,4 @@
-package com.example.airmanagement.models;
+package com.example.airmanagement.util;
 
 public enum FlightStatus {
     ACTIVE,

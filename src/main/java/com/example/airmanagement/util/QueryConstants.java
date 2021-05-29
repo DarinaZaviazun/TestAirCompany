@@ -1,4 +1,4 @@
-package com.example.airmanagement.constants;
+package com.example.airmanagement.util;
 
 public class QueryConstants {
 
