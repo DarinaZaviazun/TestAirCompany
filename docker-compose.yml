@@ -1,0 +1,22 @@
+version: "3.7"
+
+services:
+  app:
+    build:
+      context: .
+    ports:
+    - "8080:8080"
+    volumes:
+    - ./dist:/app
+    restart: on-failure
+    command: ["/wait-for-it.sh", "db:3306", "--", "java", "-jar", "AirManagement-0.0.1-SNAPSHOT.jar"]
+
+  db:
+    image: mysql:8.0
+    ports:
+    - "3308:3306"
+    env_file:
+      - .env.db
+    restart: on-failure
+    volumes:
+    - ./mysql:/var/lib/mysql
