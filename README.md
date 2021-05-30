@@ -13,7 +13,7 @@
   - port '3308'
   - serverTimeZone 'UTC'. 
   Click Test Connection to ping the server and to verify that the connection profile is working. Press 'Ok'.
-7. Go to file 'mockDataAirManagement.sql' in the root of the project and run this script in the console of database. Now you have 6 recordings in each table.
+7. Go to folder 'data', file 'mockDataAirManagement.sql' and run this script in the console of database. Now you have 6 recordings in each table.
 8. Go to Postman, click File->Import->Folder, choose folder where you copied the project. You'll see collection 'AirManagement' - choose it and press 'Import'. You'll see a collection of tabs with prepared requests for each task. Now you can simply press 'Send' and see the result in the bottom part of Postman.
 
 Now a bit more information about tabs in Postman.
