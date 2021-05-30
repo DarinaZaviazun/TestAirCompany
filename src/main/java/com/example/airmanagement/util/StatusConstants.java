@@ -12,8 +12,8 @@ public class StatusConstants {
     public static final String UNSUCCESSFUL_UPDATED_AIRCOMPANY = "This AirCompany was not updated, all values are the same";
     public static final String UNSUCCESS = "Something went wrong, check your data";
     public static final String SUCCESSFULLY_ADDED_AIRPLANE = "New Airplane was added successfully";
-    public static final String SUCCESSFULLY_UPDATED_AIRPLANES_COMPANY = "AirCompany for airplane was updated sucessfully";
+    public static final String SUCCESSFULLY_UPDATED_AIRPLANES_COMPANY = "AirCompany for airplane was updated successfully";
     public static final String SUCCESSFULLY_ADDED_FLIGHT = "New Flight was added successfully";
-    public static final String SUCCESSFULLY_UPDATED_FLIGHTS_STATUS = "Status of this flight was updated successfully";
+    public static final String SUCCESSFULLY_UPDATED_FLIGHTS_STATUS = "Status of this Flight was updated successfully";
 
 }
